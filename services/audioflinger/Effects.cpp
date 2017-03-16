@@ -106,12 +106,8 @@ AudioFlinger::EffectModule::EffectModule(ThreadBase *thread,
         goto Error;
     }
 
-    bool is_offloaded;
-    if ( (thread->type() == ThreadBase::OFFLOAD) 
-         || (thread->type() == ThreadBase::DIRECT && thread->mIsDirectPcm) ) {
-        is_offloaded = true;
-    }
-    setOffloaded(is_offloaded, thread->id());
+    setOffloaded(( (thread->type() == ThreadBase::OFFLOAD)
+         || (thread->type() == ThreadBase::DIRECT && thread->mIsDirectPcm) ), thread->id());
 
     ALOGV("Constructor success name %s, Interface %p", mDescriptor.name, mEffectInterface);
     return;
